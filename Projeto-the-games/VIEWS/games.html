@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Games</title>
+</head>
+<body>
+    <h1>Bem vindo a página de games!</h1>
+    <hr>
+    <p>Games mais jogados no momento:</p>
+    {# Exemplo de comentário no jinja2#}
+    <ul>
+        <li>Título: {{titulo}}</li>
+        <li>Ano: {{ano}}</li>
+        <li>Categoria: {{categoria}}</li>
+    </ul>
+    <p>O jogo {{titulo}} tem {{2025 - ano}} anos.</p>
+    <hr>
+    <p>Estão jogando no momento:</p>
+    <ol>
+        {% for jogador in jogadores: %}
+        <li>{{jogador}}</li>
+        {% endfor %}
+    </ol>
+    <hr>
+    <p>Outros games mais jogados no momento</p>
+    <ul>
+        {% for jogos in jogos: %}
+        <li>{{jogos}}</li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <a href="/">Voltar para a homepage</a>
+</body>
+</html>
