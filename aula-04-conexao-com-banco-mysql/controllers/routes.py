@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for
+from models.database import Game
 
 # Lista de jogadores
 jogadores = ['Miguel José', 'Miguel Isack', 'Leaf',
@@ -44,3 +45,12 @@ def init_app(app):
             return redirect(url_for('cadgames'))
         return render_template('cadgames.html',
                                gamelist=gamelist)
+        
+    # Rota Crud (Estoque de jogos)
+    @app.route('/estoque', methods=['GET', 'POST'])
+    def estoque():
+        SELECT = 'SELECT * FROM games'
+        # ORM que estamos usnado é o SQLAlchemy
+        # O método query.all = SELECT * FROM games
+        gamesEmEstoque = Game.query.all()
+        return render_template('estoque.html',gamesEmEstoque=gamesEmEstoque)

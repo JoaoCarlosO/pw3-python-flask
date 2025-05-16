@@ -1,1 +1,1 @@
-alert("se vc está lenod isso, rodou com sucesso");
+//alert("Se você está lendo isso o Javascript foi importado com sucesso!")
