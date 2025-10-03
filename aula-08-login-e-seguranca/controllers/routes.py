@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, redirect, flash
+from flask import render_template, request, url_for, redirect, flash, session
 from models.database import db, Game, Console, Usuario
 import urllib  # Permitir ler URL das APIS
 import json  # Conversão de dados
@@ -13,6 +13,18 @@ gamelist = [{'Título': 'CS-GO', 'Ano': 2012, 'Categoria': 'FPS Online'}]
 
 
 def init_app(app):
+
+    @app.before_request
+    def check_auth():
+        #rotas que não precisam de autenticação, permite o acesso:
+        routes = ['hoem', 'login', 'caduser']
+        #se a rota não requer autenticação, permite o acesso:
+        if request.endpoint in routes or request.path.startswith('/static'):
+            return
+        #se o usu´srio nção estiver autenticado, redireciona para a página de login:
+        if 'user_id' not in session:
+            return redirect(url_for('login'))
+
     @app.route('/')
     def home():
         return render_template('index.html')
@@ -157,7 +169,31 @@ def init_app(app):
     # ROTA de LOGIN
     @app.route('/login', methods=['GET', 'POST'])
     def login():
+        if request.method == 'POST':
+            email = request.form['email']
+            senha = request.form['senha']
+            # buscando usuário
+
+            user = Usuario.query.filter_by(email=email).first()
+            #Verificando  se emial e senha estão corretos
+            if user and check_password_hash(user.senha, senha):
+                #Aqui será criado a seesão para o usuário
+                session['user_id'] = user.id
+                session['user_email'] = user.email
+                flash(f'Login realizado com sucesso! Bem-vindo {user.nome}!', 'success')
+                return redirect(url_for('home'))
+            # Dados inválidos
+            else:
+                flash('Falha no Login. Verifique seu email e senha e tente novamente.', 'danger')
+                return redirect(url_for('login'))
         return render_template('login.html')
+    
+    #Rota de logout
+    @app.route('/logout', methods=['GET', 'POST'])
+    def logout():
+        session.clear()
+        flash('Você foi desconectado!', 'warning')
+        return redirect(url_for('home'))
 
     # ROTA de CADASTRO
     @app.route('/caduser', methods=['GET', 'POST'])
