@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Bem-vindo ao JCPhotos!</h1>
+        <p class="lead">Sua galeria de fotos online</p>
+        <hr class="my-4">
+        <p>Faça upload das suas imagens e compartilhe com o mundo.</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('galeria') }}" role="button">Ver Galeria</a>
+    </div>
+</div>
+{% endblock content %}
