@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 style="text-align: center;">Galeria de Fotos</h2><br>
+
+{% if imagens %}
+<div class="row">
+  {% for img in imagens %}
+    <div class="col-md-3 mb-4">
+      <div class="card">
+        <img src="/static/uploads/{{img.filename}}" class="card-img-top img-thumbnail" style="height: 200px; object-fit: cover;">
+        <div class="card-body text-center">
+          <a href="{{url_for('delete_image', id=img.id)}}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja deletar esta imagem?')">Deletar</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info text-center">
+  Nenhuma imagem encontrada. Faça o upload da primeira imagem!
+</div>
+{% endif %}
+
+<div class="container col-6">
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Upload de Imagem</h5>
+            <form action="{{url_for('galeria')}}" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Selecione uma imagem:</label>
+                    <input class="form-control" name="file" type="file" accept=".png,.jpg,.jpeg,.gif" required>
+                    <div class="form-text">Formatos permitidos: PNG, JPG, JPEG, GIF</div>
+                </div>
+                <button type="submit" class="btn btn-success btn-block">Enviar Imagem</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
