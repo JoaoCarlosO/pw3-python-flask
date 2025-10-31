@@ -10,9 +10,9 @@ routes.init_app(app)
 dir = os.path.abspath(os.path.dirname(__file__))
 
 # Passando o diretório do banco ao SQLAlchemy 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(dir, 'models/games.sqlite3')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(dir, 'models/galeriaFlamengo.sqlite3')
 # Secret para as flash messages
-app.config['SECRET_KEY'] = 'thegamessecret'
+app.config['SECRET_KEY'] = 'flamengosecret'
 # Define pasta que receberá arquivos de upload
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 # Define o tamanho máximo de um arquivo de upload
